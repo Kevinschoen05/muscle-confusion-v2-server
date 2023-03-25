@@ -1,4 +1,4 @@
-const UserSchedule = require("../models/userSchedule");
+const User = require("../models/user");
 const CompletedWorkout = require("../models/completedWorkouts")
 const Workout = require("../models/workouts")
 
@@ -32,12 +32,12 @@ module.exports = class UserSpecificAPI {
       static async fetchUserSchedule(req, res) {
         const user = req.params.userID;
         try {
-          const userSchedule = await UserSchedule.find({
-            user: user
+          const userSchedule = await User.find({
+            userID: user
           }
           );
     
-          let response = userSchedule[0].toObject()
+          let response = userSchedule.schedule
           res.status(200).json(response);
         } catch (err) {
           res.status(404).json({ message: err.message });
@@ -47,10 +47,10 @@ module.exports = class UserSpecificAPI {
       static async createUserSchedule(req, res) {
         const userSchedule = req.body;
         try {
-          await UserSchedule.create(userSchedule);
+          await User.create(userSchedule);
           res
             .status(201)
-            .json({ message: "Completed Workout Created Successfully" });
+            .json({ message: "User Schedule Created Successfully" });
         } catch (err) {
           res.status(400).json({ message: err.message });
         }
@@ -60,7 +60,7 @@ module.exports = class UserSpecificAPI {
         const updatedSchedule = req.body.schedule;
         const user = req.body.user;
         try {
-          await UserSchedule.findOneAndUpdate(
+          await User.findOneAndUpdate(
             {
               user: user,
             },
