@@ -10,6 +10,9 @@ const userSchema = mongoose.Schema({
     }, 
     schedule: {
         type: Array
+    },
+    inbox: {
+        type: Array
     }
 })
 module.exports = mongoose.model("User", userSchema)

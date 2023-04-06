@@ -32,12 +32,12 @@ module.exports = class UserSpecificAPI {
       static async fetchUserSchedule(req, res) {
         const user = req.params.userID;
         try {
-          const userSchedule = await User.find({
+          const userData = await User.find({
             userID: user
           }
           );
     
-          let response = userSchedule.schedule
+          let response = userData
           res.status(200).json(response);
         } catch (err) {
           res.status(404).json({ message: err.message });
@@ -62,7 +62,7 @@ module.exports = class UserSpecificAPI {
         try {
           await User.findOneAndUpdate(
             {
-              user: user,
+              userID: user,
             },
             { $set: { schedule: updatedSchedule } }
           )
