@@ -30,4 +30,21 @@ module.exports = class WorkoutAPI {
       res.status(400).json({ message: err.message });
     }
   }
+
+  static async updateWorkoutByWorkoutID(req, res) {
+    const updatedWorkout = req.body.updatedFinalWorkout;
+    const workoutID = req.body.workoutID;
+    try {
+      await Workout.findOneAndUpdate(
+        {
+          _id: workoutID,
+        },
+        { $set: { exercises: updatedWorkout } }
+      )
+      res.status(200).json({message: "Workout Updated Successfully"});
+    } 
+    catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
 };
