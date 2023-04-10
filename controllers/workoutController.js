@@ -33,7 +33,7 @@ module.exports = class WorkoutAPI {
 
   static async updateWorkoutByWorkoutID(req, res) {
     const updatedWorkout = req.body.updatedFinalWorkout;
-    const workoutID = req.body.workoutID;
+    const workoutID = req.body._id;
     try {
       await Workout.findOneAndUpdate(
         {
