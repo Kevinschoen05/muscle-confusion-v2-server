@@ -7,6 +7,7 @@ const workoutSchema = mongoose.Schema({
     },
     users: { 
         type: Array
-    }
+    },
+    modifiedDate: String
 })
 module.exports = mongoose.model("Workout", workoutSchema)
