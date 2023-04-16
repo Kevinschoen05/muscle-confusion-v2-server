@@ -10,6 +10,20 @@ module.exports = class CompletedWorkoutAPI {
     }
   }
 
+  static async fetchCompletedWorkoutsbyWorkoutId(req, res, sortByCompletionDate = false  ) {
+    const workoutID = req.params.workoutID;
+    try {
+      const sortParameter = sortByCompletionDate ? { completionDate: -1 } : {};
+
+      const workouts = await CompletedWorkout.find({
+        workoutID: workoutID,
+      }).sort(sortParameter)
+      res.status(200).json(workouts);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  }
+
   static async addCompletedWorkout(req, res) {
     const workout = req.body;
     try {
