@@ -5,10 +5,14 @@ const Workout = require("../models/workouts");
 module.exports = class UserSpecificAPI {
   static async initializeUser(req, res) {
     const userID = req.params.userID;
+    const userName = req.body.userName;
+
+    console.log(`Request body: ${JSON.stringify(req.body)}`);
+    console.log(`userName value: ${userName}`);
 
     const newUser = {
       userID: userID,
-      userName: req.body.userName,
+      userName: userName,
       totalVolume: 0,
       workoutStreak: 0,
       friends: [],
@@ -16,9 +20,10 @@ module.exports = class UserSpecificAPI {
       inbox: [],
     };
 
+    console.log(newUser);
     try {
       const result = await User.create(newUser);
-      res.status(200).json(`User ${userID} created!`);
+      res.status(200).json(`User ${userID} created! body: ${userName} `);
     } catch (err) {
       res.status(404).json(`Error creating user ${userID}: ${err}`);
     }
