@@ -8,7 +8,7 @@ module.exports = class UserSpecificAPI {
 
     const newUser = {
       userID: userID,
-      userName: "",
+      userName: req.body.userName,
       totalVolume: 0,
       workoutStreak: 0,
       friends: [],
