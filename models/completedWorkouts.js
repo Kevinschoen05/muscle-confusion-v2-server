@@ -18,7 +18,7 @@ const completedWorkoutSchema = mongoose.Schema({
     totalVolume: Number, 
     completionDate: {
         type: Date, 
-         default: () => dayjs().format('YYYY-MM-DDTHH:mm:ss[Z]')
+         default: () => dayjs().tz().format('YYYY-MM-DDTHH:mm:ss[Z]')
 
     },
     exercises: { 
