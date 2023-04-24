@@ -24,6 +24,18 @@ module.exports = class CompletedWorkoutAPI {
     }
   }
 
+  static async fetchCompletedWorkoutsbyId(req, res) {
+    const completedWorkoutID = req.params.completedWorkoutID 
+    try {
+      const completedWorkout = await CompletedWorkout.find({
+         _id: completedWorkoutID
+      })
+      res.status(200).json(completedWorkout);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  }
+
   static async addCompletedWorkout(req, res) {
     const workout = req.body;
     try {
