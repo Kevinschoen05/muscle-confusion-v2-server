@@ -18,7 +18,9 @@ router.put("/workouts/edit/:workoutID", WorkoutAPI.updateWorkoutByWorkoutID)
 //Completed Workouts
 router.get("/completedWorkouts", CompletedWorkoutAPI.fetchAllCompletedWorkouts)
 router.get("/completedWorkouts/:workoutID", CompletedWorkoutAPI.fetchCompletedWorkoutsbyWorkoutId)
+router.get("/completedWorkouts/:completedWorkoutID", CompletedWorkoutAPI.fetchCompletedWorkoutsbyId)
 router.post("/completedWorkouts", CompletedWorkoutAPI.addCompletedWorkout)
+
 
 //Exercises
 router.get("/exercises", ExerciseAPI.fetchAllExercises)
