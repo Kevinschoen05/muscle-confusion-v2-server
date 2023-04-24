@@ -1,4 +1,6 @@
 const CompletedWorkout = require("../models/completedWorkouts");
+const ObjectId = require('mongoose').Types.ObjectId;
+
 
 module.exports = class CompletedWorkoutAPI {
   static async fetchAllCompletedWorkouts(req, res) {
@@ -25,14 +27,18 @@ module.exports = class CompletedWorkoutAPI {
   }
 
   static async fetchCompletedWorkoutsbyId(req, res) {
-    const completedWorkoutID = req.params.completedWorkoutID 
+    const completedWorkoutID = req.params.completedWorkoutID;
     try {
       const completedWorkout = await CompletedWorkout.find({
-         _id: completedWorkoutID
-      })
-      res.status(200).json(completedWorkout);
+        _id: ObjectId(completedWorkoutID)
+      });      
+      if (completedWorkout) {
+        res.status(200).json(completedWorkout);
+      } else {
+        res.status(404).json({ message: 'Completed workout not found' });
+      }
     } catch (err) {
-      res.status(404).json({ message: err.message });
+      res.status(500).json({ message: err.message });
     }
   }
 
