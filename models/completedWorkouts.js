@@ -26,6 +26,9 @@ const completedWorkoutSchema = mongoose.Schema({
     },
     users: { 
         type: Array
+    },
+    externalities: { 
+        type: Array
     }
 })
 module.exports = mongoose.model("CompletedWorkout", completedWorkoutSchema)
