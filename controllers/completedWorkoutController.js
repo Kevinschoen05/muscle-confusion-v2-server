@@ -57,10 +57,10 @@ module.exports = class CompletedWorkoutAPI {
     }
   }
 
-  static async getCompletedSetsByExercise(req, res, userID) {
+  static async getCompletedSetsByExercise(req, res) {
     const query = {
       "exercises.id": req.params.exerciseID,
-      users: userID 
+      users: req.params.userID 
     };
     try {
       const completedExercises = await CompletedWorkout.find(query).toArray();
