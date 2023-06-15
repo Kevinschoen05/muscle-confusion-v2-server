@@ -22,7 +22,7 @@ router.get("/completedWorkouts/id/:completedWorkoutID", CompletedWorkoutAPI.fetc
 router.post("/completedWorkouts", CompletedWorkoutAPI.addCompletedWorkout)
 
 //Completed Exercises 
-router.get("/completedWorkouts/:exerciseID", CompletedWorkoutAPI.getCompletedSetsByExercise)
+router.get("/completedWorkouts/exercises/:exerciseID", CompletedWorkoutAPI.getCompletedSetsByExercise)
 
 //Exercises
 router.get("/exercises", ExerciseAPI.fetchAllExercises)

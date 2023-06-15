@@ -63,7 +63,7 @@ module.exports = class CompletedWorkoutAPI {
       users: req.params.userID 
     };
     try {
-      const completedExercises = await CompletedWorkout.find(query).toArray();
+      const completedExercises = await CompletedWorkout.find(query);
       if (completedExercises) {
         res.status(200).json(completedExercises);
       } else {
