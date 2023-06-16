@@ -58,12 +58,13 @@ module.exports = class CompletedWorkoutAPI {
   }
 
   static async getCompletedSetsByExercise(req, res) {
-    const query = {
-      "exercises.id": req.params.exerciseID,
-      users: req.params.userID 
-    };
     try {
-      const completedExercises = await CompletedWorkout.find(query);
+      const completedExercises = await CompletedWorkout.find({
+       "exercises.id": req.params.exerciseID,
+        users: req.params.userID
+      });
+
+
       if (completedExercises) {
         res.status(200).json(completedExercises);
       } else {
