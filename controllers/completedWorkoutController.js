@@ -57,21 +57,4 @@ module.exports = class CompletedWorkoutAPI {
     }
   }
 
-  static async getCompletedSetsByExercise(req, res) {
-    try {
-      const completedExercises = await CompletedWorkout.find({
-       "exercises.id": req.params.exerciseID,
-        users: req.params.userID
-      });
-
-
-      if (completedExercises) {
-        res.status(200).json(completedExercises);
-      } else {
-        res.status(404).json({ message: "Exercises not found" });
-      }
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
 };
