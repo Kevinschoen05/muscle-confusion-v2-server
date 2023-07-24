@@ -111,8 +111,8 @@ module.exports = class UserSpecificAPI {
     }
   }
 
-  static async addUserFriends (req, res){
-    const newFriends = req.body.friends
+  static async addUserFriends(req, res) {
+    const newFriends = req.body.newFriends;
     const user = req.params.userID;
     try {
       await User.findOneAndUpdate(
@@ -120,6 +120,22 @@ module.exports = class UserSpecificAPI {
           userID: user,
         },
         { $push: { friends: newFriends } }
+      );
+      res.status(200).json({ message: "Friends List Updated Successfully" });
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
+
+  static async removeUserFriends(req, res) {
+    const removeFriends = req.body.removeFriends;
+    const user = req.params.userID;
+    try {
+      await User.findOneAndUpdate(
+        {
+          userID: user,
+        },
+        { $pull: { friends: removeFriends } }
       );
       res.status(200).json({ message: "Friends List Updated Successfully" });
     } catch (err) {

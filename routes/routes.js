@@ -38,6 +38,7 @@ router.get("/completedWorkouts/users/:userID", UserSpecificAPI.fetchCompletedWor
 //FRIENDS
 router.get("/users/friends/:userID", UserSpecificAPI.fetchUserFriends)
 router.put("/users/friends/add/:userID", UserSpecificAPI.addUserFriends)
+router.put("/users/friends/remove/:userID", UserSpecificAPI.removeUserFriends)
 
 //SCHEDULE
 router.post("/users/:userID/userSchedule", UserSpecificAPI.createUserSchedule)
