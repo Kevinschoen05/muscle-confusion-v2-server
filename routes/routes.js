@@ -35,8 +35,12 @@ router.get("/users/:userID/userSchedule", UserSpecificAPI.fetchUserSchedule)
 router.get("/workouts/users/:userID", UserSpecificAPI.fetchWorkoutsByUserId)
 router.get("/completedWorkouts/users/:userID", UserSpecificAPI.fetchCompletedWorkoutsByUserId)
 
-router.post("users/:userID/userSchedule", UserSpecificAPI.createUserSchedule)
+//FRIENDS
+router.get("/users/friends/:userID", UserSpecificAPI.fetchUserFriends)
+router.put("/users/friends/add/:userID", UserSpecificAPI.addUserFriends)
 
+//SCHEDULE
+router.post("/users/:userID/userSchedule", UserSpecificAPI.createUserSchedule)
 router.put("/users/:userID/userSchedule", UserSpecificAPI.updateUserSchedule)
 
 

@@ -94,4 +94,36 @@ module.exports = class UserSpecificAPI {
       res.status(400).json({ message: err.message });
     }
   }
+
+  //USER FRIENDS
+
+  static async fetchUserFriends(req, res) {
+    const user = req.params.userID;
+    try {
+      const userData = await User.find({
+        userID: user,
+      });
+
+      let response = userData;
+      res.status(200).json(response);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  }
+
+  static async addUserFriends (req, res){
+    const newFriends = req.body.friends
+    const user = req.params.userID;
+    try {
+      await User.findOneAndUpdate(
+        {
+          userID: user,
+        },
+        { $push: { friends: newFriends } }
+      );
+      res.status(200).json({ message: "Friends List Updated Successfully" });
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
 };
