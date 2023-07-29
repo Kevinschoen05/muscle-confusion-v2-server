@@ -29,6 +29,16 @@ module.exports = class UserSpecificAPI {
     }
   }
 
+  static async fetchAllUsers(req, res){ 
+    try {
+      const usersArray = await User.find({});
+      res.json(usersArray);
+    } catch (err) {
+      console.error('Error retrieving users:', err);
+      res.status(500).json({ error: 'Failed to retrieve users.' });
+    }    
+  }
+
   static async fetchWorkoutsByUserId(req, res) {
     const user = req.params.userID;
     try {
