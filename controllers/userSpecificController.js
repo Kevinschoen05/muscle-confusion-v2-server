@@ -111,6 +111,23 @@ module.exports = class UserSpecificAPI {
     }
   }
 
+  static async fetchUserFriendsData(req, res) {
+    const userIDs = req.query.userIDs.split(',');
+    console.log("Received userIDs:", userIDs); // Debugging log
+
+    try {
+      const usersData = await User.aggregate([
+        { $match: { userID: { $in: userIDs } } },
+        { $project: { _id: 0, userID: 1, userName: 1 } },
+      ]);
+
+      return res.json(usersData);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      return res.status(500).json({ error: "Error fetching user data." });
+    }
+  }
+
   static async addUserFriends(req, res) {
     const newFriends = req.body.newFriends;
     const user = req.params.userID;
