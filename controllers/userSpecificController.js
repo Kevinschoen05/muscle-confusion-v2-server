@@ -52,14 +52,14 @@ module.exports = class UserSpecificAPI {
   }
 
   static async fetchCompletedWorkoutsByUserId(req, res) {
-    const user = req.params.userID;
+    const userIds = req.params.userIDs.split(','); // Assuming userIDs are comma-separated in the request params
     try {
       const userCompletedWorkouts = await CompletedWorkout.find({
-        users: user,
+        users: { $in: userIds },
       });
       res.status(200).json(userCompletedWorkouts);
     } catch (err) {
-      res.satus(404).json({ message: err.message });
+      res.status(404).json({ message: err.message });
     }
   }
 
