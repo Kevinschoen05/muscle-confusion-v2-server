@@ -29,21 +29,21 @@ module.exports = class UserSpecificAPI {
     }
   }
 
-  static async fetchAllUsers(req, res){ 
+  static async fetchAllUsers(req, res) {
     try {
       const usersArray = await User.find({});
       res.json(usersArray);
     } catch (err) {
-      console.error('Error retrieving users:', err);
-      res.status(500).json({ error: 'Failed to retrieve users.' });
-    }    
+      console.error("Error retrieving users:", err);
+      res.status(500).json({ error: "Failed to retrieve users." });
+    }
   }
 
   static async fetchWorkoutsByUserId(req, res) {
-    const user = req.params.userID;
+    const userIds = req.params.userIDs.split(","); // Assuming userIDs are comma-separated in the request params
     try {
       const userWorkouts = await Workout.find({
-        users: user,
+        users: { $in: userIds },
       });
       res.status(200).json(userWorkouts);
     } catch (err) {
@@ -52,7 +52,7 @@ module.exports = class UserSpecificAPI {
   }
 
   static async fetchCompletedWorkoutsByUserId(req, res) {
-    const userIds = req.params.userIDs.split(','); // Assuming userIDs are comma-separated in the request params
+    const userIds = req.params.userIDs.split(","); // Assuming userIDs are comma-separated in the request params
     try {
       const userCompletedWorkouts = await CompletedWorkout.find({
         users: { $in: userIds },
@@ -122,7 +122,7 @@ module.exports = class UserSpecificAPI {
   }
 
   static async fetchUserFriendsData(req, res) {
-    const userIDs = req.query.userIDs.split(',');
+    const userIDs = req.query.userIDs.split(",");
     console.log("Received userIDs:", userIDs); // Debugging log
 
     try {
