@@ -4,6 +4,7 @@ const WorkoutAPI = require("../controllers/workoutController")
 const CompletedWorkoutAPI = require("../controllers/completedWorkoutController")
 const ExerciseAPI = require('../controllers/exerciseController')
 const UserSpecificAPI = require('../controllers/userSpecificController')
+const UserInboxAPI = require('../controllers/userInboxController')
 
 
 //Workouts 
@@ -35,6 +36,9 @@ router.get("/users", UserSpecificAPI.fetchAllUsers)
 router.get("/users/:userID/userSchedule", UserSpecificAPI.fetchUserSchedule)
 router.get("/workouts/users/:userIDs", UserSpecificAPI.fetchWorkoutsByUserId)
 router.get("/completedWorkouts/users/:userIDs", UserSpecificAPI.fetchCompletedWorkoutsByUserId)
+
+//User Inbox
+
 
 //FRIENDS
 router.get("/users/friends/data", UserSpecificAPI.fetchUserFriendsData)
