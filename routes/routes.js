@@ -37,7 +37,11 @@ router.get("/users/:userID/userSchedule", UserSpecificAPI.fetchUserSchedule)
 router.get("/workouts/users/:userIDs", UserSpecificAPI.fetchWorkoutsByUserId)
 router.get("/completedWorkouts/users/:userIDs", UserSpecificAPI.fetchCompletedWorkoutsByUserId)
 
-//User Inbox
+//User Messaging
+router.post("/users/messages", UserInboxAPI.createMessage);
+router.get("/users/inbox/:userID", UserInboxAPI.getInboxMessages);
+router.put("/users/messages/:messageID", UserInboxAPI.updateMessage);
+router.delete("/users/messages/:messageID", UserInboxAPI.deleteMessage);
 
 
 //FRIENDS

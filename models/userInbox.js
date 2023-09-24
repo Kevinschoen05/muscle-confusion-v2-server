@@ -6,6 +6,7 @@ const userInboxSchema = mongoose.Schema({
     senderUserID: String, 
     senderUserName: String,
     messageType: String, 
+    messageContent: String, 
     timeStamp: { type: Date, default: Date.now },
 
 
