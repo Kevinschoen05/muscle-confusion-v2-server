@@ -1,8 +1,8 @@
 const mongoose = require('mongoose'); 
 
 const userInboxSchema = mongoose.Schema({
-    userID: String,
-    userName: String,
+    receiverUserID: String,
+    receiverUserName: String,
     senderUserID: String, 
     senderUserName: String,
     messageType: String, 
