@@ -10,7 +10,7 @@ module.exports = class UserInboxAPI {
                 content
             });
     
-            const savedMessage = await newMessage.save();
+            const savedMessage = await newMessage.create();
             return savedMessage;
         } catch (error) {
             throw error;
