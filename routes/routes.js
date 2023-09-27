@@ -39,7 +39,7 @@ router.get("/completedWorkouts/users/:userIDs", UserSpecificAPI.fetchCompletedWo
 
 //User Messaging
 router.post("/users/messages", UserInboxAPI.createMessage);
-router.get("/users/inbox/:userID", UserInboxAPI.getInboxMessages);
+router.get("/users/inbox/:userID", UserInboxAPI.fetchInboxMessagesByUser);
 router.put("/users/messages/:messageID", UserInboxAPI.updateMessage);
 router.delete("/users/messages/:messageID", UserInboxAPI.deleteMessage);
 
