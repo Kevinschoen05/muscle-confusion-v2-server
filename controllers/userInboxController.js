@@ -14,16 +14,17 @@ module.exports = class UserInboxAPI {
   }
 
   // Get messages for a specific user's inbox
-  static async getInboxMessages(userID) {
+  static async fetchInboxMessagesByUser(req, res) {
+    const userID = req.params.userID;
     try {
-      const messages = await UserInbox.find({ receiverUserID: userID }).sort({
-        timeStamp: -1,
-      });
-      return messages;
-    } catch (error) {
-      throw error;
+        const userMessages = await UserInbox.find({
+          receiverUserID: userID,
+        });
+        res.status(200).json(userMessages);
+      } catch (err) {
+        res.status(404).json({ message: err.message });
+      }
     }
-  }
 
   // Update a message (for example, mark it as read)
   static async updateMessage(messageID, updates) {
