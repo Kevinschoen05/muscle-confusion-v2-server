@@ -5,9 +5,7 @@ module.exports = class UserInboxAPI {
     const newMessage = req.body;
     try {
       await UserInbox.create(newMessage);
-      res
-        .status(201)
-        .json({ message: "New Message Created Successfully" });
+      res.status(201).json({ message: "New Message Created Successfully" });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -17,26 +15,29 @@ module.exports = class UserInboxAPI {
   static async fetchInboxMessagesByUser(req, res) {
     const userID = req.params.userID;
     try {
-        const userMessages = await UserInbox.find({
-          receiverUserID: userID,
-        });
-        res.status(200).json(userMessages);
-      } catch (err) {
-        res.status(404).json({ message: err.message });
-      }
+      const userMessages = await UserInbox.find({
+        receiverUserID: userID,
+      });
+      res.status(200).json(userMessages);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
     }
+  }
 
   // Update a message (for example, mark it as read)
-  static async updateMessage(messageID, updates) {
+  static async updateMessage(req, res) {
+    const messageAccepted = req.body.messageAccepted;
+    const messageID = req.body._id;
     try {
-      const updatedMessage = await UserInbox.findByIdAndUpdate(
-        messageID,
-        updates,
-        { new: true }
+      await UserInbox.findOneAndUpdate(
+        {
+          _id: messageID,
+        },
+        { $set: { messageRead: true, messageAccepted: messageAccepted } }
       );
-      return updatedMessage;
-    } catch (error) {
-      throw error;
+      res.status(200).json({ message: "Message Updated Successfully" });
+    } catch (err) {
+      res.status(400).json({ message: err.message });
     }
   }
 
