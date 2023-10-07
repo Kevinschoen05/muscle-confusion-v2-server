@@ -27,7 +27,7 @@ module.exports = class UserInboxAPI {
   // Update a message (for example, mark it as read)
   static async updateMessage(req, res) {
     const messageAccepted = req.body.messageAccepted;
-    const messageID = req.body._id;
+    const messageID = req.params.messageID;
     try {
       await UserInbox.findOneAndUpdate(
         {
