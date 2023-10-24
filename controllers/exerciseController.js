@@ -22,6 +22,18 @@ module.exports = class ExerciseAPI {
     }
   }
 
+  static async fetchExerciseByExerciseId(req, res) {
+    const exerciseID = req.params.exerciseID
+    try {
+      const exercise = await Exercise.find({
+        _id: exerciseID,
+      });
+      res.status(200).json(exercise);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  }
+
   static async addExercise(req, res) {
     const exercise = req.body;
     try {
