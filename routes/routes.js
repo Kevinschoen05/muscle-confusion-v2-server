@@ -26,6 +26,7 @@ router.post("/completedWorkouts", CompletedWorkoutAPI.addCompletedWorkout)
 router.get("/exercises", ExerciseAPI.fetchAllExercises)
 router.get("/exercises/muscleGroups", ExerciseAPI.getMuscleGroups)
 router.get("/exercises/:primaryMuscleGroup", ExerciseAPI.fetchExercisesByMuscleGroup)
+router.get("/exercises/id/:exerciseID", ExerciseAPI.fetchExerciseByExerciseId)
 
 router.post("/exercises", ExerciseAPI.addExercise)
 
