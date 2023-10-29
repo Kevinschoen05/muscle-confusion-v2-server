@@ -1,4 +1,4 @@
-import MatchupWorkout from "../models/matchupWorkouts";
+const MatchupWorkout = require("../models/MatchupWorkouts");;
 
 export default class MatchupWorkoutAPI {
     static async createMatchupWorkout(req, res) {
