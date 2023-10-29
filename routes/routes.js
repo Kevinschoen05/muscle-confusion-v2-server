@@ -14,13 +14,13 @@ router.get("/workouts/:workoutID", WorkoutAPI.fetchWorkoutbyWorkoutId)
 router.post("/workouts", WorkoutAPI.addWorkout);
 router.put("/workouts/edit/:workoutID", WorkoutAPI.updateWorkoutByWorkoutID)
 
-
-
 //Completed Workouts
 router.get("/completedWorkouts", CompletedWorkoutAPI.fetchAllCompletedWorkouts)
 router.get("/completedWorkouts/:workoutID", CompletedWorkoutAPI.fetchCompletedWorkoutsbyWorkoutId)
 router.get("/completedWorkouts/id/:completedWorkoutID", CompletedWorkoutAPI.fetchCompletedWorkoutsbyId)
 router.post("/completedWorkouts", CompletedWorkoutAPI.addCompletedWorkout)
+
+router.post("/matchupWorkouts", )
 
 //Exercises
 router.get("/exercises", ExerciseAPI.fetchAllExercises)
