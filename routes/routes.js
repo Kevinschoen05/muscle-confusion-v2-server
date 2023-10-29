@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const WorkoutAPI = require("../controllers/workoutController")
 const CompletedWorkoutAPI = require("../controllers/completedWorkoutController")
+const MatchupWorkoutAPI = require('../controllers/matchupWorkoutController').default
 const ExerciseAPI = require('../controllers/exerciseController')
 const UserSpecificAPI = require('../controllers/userSpecificController')
 const UserInboxAPI = require('../controllers/userInboxController')
@@ -20,7 +21,7 @@ router.get("/completedWorkouts/:workoutID", CompletedWorkoutAPI.fetchCompletedWo
 router.get("/completedWorkouts/id/:completedWorkoutID", CompletedWorkoutAPI.fetchCompletedWorkoutsbyId)
 router.post("/completedWorkouts", CompletedWorkoutAPI.addCompletedWorkout)
 
-router.post("/matchupWorkouts", )
+router.post("/matchupWorkouts", MatchupWorkoutAPI.createMatchupWorkout)
 
 //Exercises
 router.get("/exercises", ExerciseAPI.fetchAllExercises)
