@@ -16,16 +16,7 @@ const MatchupWorkoutSchema = mongoose.Schema({
   userWorkoutData: [
     {
       userID: String,
-      workoutDuration: String,
-      totalVolume: Number,
-      completionDate: {
-        type: Date,
-        default: () => dayjs().tz().format("YYYY-MM-DDTHH:mm:ss[Z]"),
-      },
       exercises: {
-        type: Array,
-      },
-      externalities: {
         type: Array,
       },
     },
