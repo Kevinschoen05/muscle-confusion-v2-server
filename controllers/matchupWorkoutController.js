@@ -12,4 +12,20 @@ module.exports = class MatchupWorkoutAPI {
       res.status(400).json({ message: err.message });
     }
   }
+
+  static async getMatchupWorkoutByMatchupWorkoutId(req, res) {
+    const matchupWorkoutID = req.params.matchupWorkoutID;
+    try {
+      const matchupWorkout = await MatchupWorkout.find({
+        _id: ObjectId(matchupWorkoutID),
+      });
+      if (matchupWorkout) {
+        res.status(200).json(matchupWorkout);
+      } else {
+        res.status(404).json({ message: "Matchup workout not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
 };
