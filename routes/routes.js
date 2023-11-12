@@ -21,7 +21,11 @@ router.get("/completedWorkouts/:workoutID", CompletedWorkoutAPI.fetchCompletedWo
 router.get("/completedWorkouts/id/:completedWorkoutID", CompletedWorkoutAPI.fetchCompletedWorkoutsbyId)
 router.post("/completedWorkouts", CompletedWorkoutAPI.addCompletedWorkout)
 
+
+//Matchup Workouts
 router.post("/matchupWorkouts", MatchupWorkoutAPI.createMatchupWorkout)
+router.get("/matchupWorkouts/id/:matchupWorkoutID", MatchupWorkoutAPI.getMatchupWorkoutByMatchupWorkoutId)
+
 
 //Exercises
 router.get("/exercises", ExerciseAPI.fetchAllExercises)
