@@ -44,6 +44,10 @@ router.get(
   "/completedMatchupWorkouts/:userID",
   completedMatchupWorkoutsAPI.getCompletedMatchupWorkoutsByUserID
 );
+router.get(
+    "/completedMatchupWorkouts/id/:completedMatchupWorkoutID",
+    completedMatchupWorkoutsAPI.getCompletedMatchupWorkoutsByID
+  );
 router.post(
   "/completedMatchupWorkouts",
   completedMatchupWorkoutsAPI.createCompletedMatchupWorkout
