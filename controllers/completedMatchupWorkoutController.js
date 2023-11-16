@@ -37,7 +37,7 @@ module.exports = class completedMatchupWorkoutsAPI {
     }
   }
 
-  static async getCompletedMatchupWorkoutsByID(req, res) {
+  static async getCompletedMatchupWorkoutByID(req, res) {
     const completedMatchupWorkoutID = req.params.completedMatchupWorkoutID;
     try {
       const result = await completedMatchupWorkout.find({
