@@ -37,14 +37,14 @@ module.exports = class completedMatchupWorkoutsAPI {
     }
   }
 
-  static async fetchCompletedMatchupWorkoutsByID(req, res) {
+  static async getCompletedMatchupWorkoutsByID(req, res) {
     const completedMatchupWorkoutID = req.params.completedMatchupWorkoutID;
     try {
-      const completedMatchupWorkout = await completedMatchupWorkout.find({
+      const result = await completedMatchupWorkout.find({
         _id: ObjectId(completedMatchupWorkoutID),
       });
-      if (completedMatchupWorkout) {
-        res.status(200).json(completedMatchupWorkout);
+      if (result) {
+        res.status(200).json(result);
       } else {
         res.status(404).json({ message: "Completed workout not found" });
       }
