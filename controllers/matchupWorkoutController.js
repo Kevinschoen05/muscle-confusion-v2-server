@@ -31,4 +31,20 @@ module.exports = class MatchupWorkoutAPI {
       res.status(500).json({ message: err.message });
     }
   }
+
+  static async getMatchupWorkoutsByUserID(req, res) {
+    const userIds = req.params.userIDs.split(","); // Assuming userIDs are comma-separated in the request params
+    try {
+      const userMatchupWorkouts = await MatchupWorkout.find({
+        userWorkoutData: {
+          $elemMatch: { userID: { $in: userIds } },
+        },
+      });
+      res.status(200).json(userMatchupWorkouts);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  }
 };
+
+

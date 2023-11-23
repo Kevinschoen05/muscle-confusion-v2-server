@@ -28,11 +28,15 @@ router.get(
 router.post("/completedWorkouts", CompletedWorkoutAPI.addCompletedWorkout);
 
 //Matchup Workouts
-router.post("/matchupWorkouts", MatchupWorkoutAPI.createMatchupWorkout);
+router.get(
+  "/matchupWorkouts/:userIDs",
+  MatchupWorkoutAPI.getMatchupWorkoutsByUserID
+);
 router.get(
   "/matchupWorkouts/id/:matchupWorkoutID",
   MatchupWorkoutAPI.getMatchupWorkoutByMatchupWorkoutId
 );
+router.post("/matchupWorkouts", MatchupWorkoutAPI.createMatchupWorkout);
 
 //Completed Matchup Workouts
 router.get(
@@ -45,9 +49,9 @@ router.get(
   completedMatchupWorkoutsAPI.getCompletedMatchupWorkoutsByUserID
 );
 router.get(
-    "/completedMatchupWorkouts/id/:completedMatchupWorkoutID",
-    completedMatchupWorkoutsAPI.getCompletedMatchupWorkoutByID
-  );
+  "/completedMatchupWorkouts/id/:completedMatchupWorkoutID",
+  completedMatchupWorkoutsAPI.getCompletedMatchupWorkoutByID
+);
 router.post(
   "/completedMatchupWorkouts",
   completedMatchupWorkoutsAPI.createCompletedMatchupWorkout
