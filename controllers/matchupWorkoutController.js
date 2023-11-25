@@ -1,4 +1,5 @@
 const MatchupWorkout = require("../models/MatchupWorkouts");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = class MatchupWorkoutAPI {
   static async createMatchupWorkout(req, res) {
