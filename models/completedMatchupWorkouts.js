@@ -12,6 +12,7 @@ dayjs.tz.setDefault("America/New_York");
 
 const completedMatchupWorkoutSchema = mongoose.Schema({
   workoutID: String,
+  matchupWorkoutID: String,
   workoutTitle: String,
   userWorkoutData: [
     {

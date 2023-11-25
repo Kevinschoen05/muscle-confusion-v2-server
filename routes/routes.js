@@ -37,6 +37,8 @@ router.get(
   MatchupWorkoutAPI.getMatchupWorkoutByMatchupWorkoutId
 );
 router.post("/matchupWorkouts", MatchupWorkoutAPI.createMatchupWorkout);
+router.put("/matchupWorkouts/update/:matchupWorkoutID", MatchupWorkoutAPI.updateMatchupWorkout);
+
 
 //Completed Matchup Workouts
 router.get(
