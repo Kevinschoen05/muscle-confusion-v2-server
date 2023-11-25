@@ -5,14 +5,43 @@ module.exports = class MatchupWorkoutAPI {
     const newWorkout = req.body;
     try {
       const createdWorkout = await MatchupWorkout.create(newWorkout);
-      res
-        .status(201)
-        .json({
-          message: "New Matchup Message Created Successfully",
-          _id: createdWorkout._id,
-        });
+      res.status(201).json({
+        message: "New Matchup Message Created Successfully",
+        _id: createdWorkout._id,
+      });
     } catch (err) {
       res.status(400).json({ message: err.message });
+    }
+  }
+
+  static async updateMatchupWorkout(req, res) {
+    try {
+      const {
+        matchupWorkoutID,
+        userID,
+        totalVolume,
+        completionDate,
+        workoutDuration,
+      } = req.body;
+
+      // Find the document by matchupWorkoutID and update the specific user's data
+      await MatchupWorkout.updateOne(
+        {
+          _id: matchupWorkoutID,
+          "userWorkoutData.userID": userID,
+        },
+        {
+          $set: {
+            "userWorkoutData.$.totalVolume": totalVolume,
+            "userWorkoutData.$.completionDate": completionDate,
+            "userWorkoutData.$.workoutDuration": workoutDuration,
+          },
+        }
+      );
+
+      res.status(200).send("Workout data updated successfully");
+    } catch (error) {
+      res.status(500).send("Error updating workout data: " + error.message);
     }
   }
 
@@ -46,5 +75,3 @@ module.exports = class MatchupWorkoutAPI {
     }
   }
 };
-
-
