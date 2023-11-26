@@ -23,6 +23,7 @@ module.exports = class MatchupWorkoutAPI {
         totalVolume,
         completionDate,
         workoutDuration,
+        completedExercises
       } = req.body;
 
       // Find the document by matchupWorkoutID and update the specific user's data
@@ -36,6 +37,7 @@ module.exports = class MatchupWorkoutAPI {
             "userWorkoutData.$.totalVolume": totalVolume,
             "userWorkoutData.$.completionDate": completionDate,
             "userWorkoutData.$.workoutDuration": workoutDuration,
+            "userWorkoutData.$.completedExercises": completedExercises
           },
         }
       );
