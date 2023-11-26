@@ -23,7 +23,7 @@ module.exports = class MatchupWorkoutAPI {
         totalVolume,
         completionDate,
         workoutDuration,
-        completedExercises
+        completedExercises,
       } = req.body;
 
       // Find the document by matchupWorkoutID and update the specific user's data
@@ -37,7 +37,7 @@ module.exports = class MatchupWorkoutAPI {
             "userWorkoutData.$.totalVolume": totalVolume,
             "userWorkoutData.$.completionDate": completionDate,
             "userWorkoutData.$.workoutDuration": workoutDuration,
-            "userWorkoutData.$.exercises": completedExercises
+            "userWorkoutData.$.exercises": completedExercises,
           },
         }
       );
@@ -69,8 +69,11 @@ module.exports = class MatchupWorkoutAPI {
     try {
       const userMatchupWorkouts = await MatchupWorkout.find({
         userWorkoutData: {
-          $elemMatch: { userID: { $in: userIds } },
+          $not: {
+            $elemMatch: { completionDate: { $exists: true, $ne: null } },
+          },
         },
+        "userWorkoutData.userID": { $in: userIds },
       });
       res.status(200).json(userMatchupWorkouts);
     } catch (err) {
