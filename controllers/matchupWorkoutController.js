@@ -37,7 +37,7 @@ module.exports = class MatchupWorkoutAPI {
             "userWorkoutData.$.totalVolume": totalVolume,
             "userWorkoutData.$.completionDate": completionDate,
             "userWorkoutData.$.workoutDuration": workoutDuration,
-            "userWorkoutData.$.completedExercises": completedExercises
+            "userWorkoutData.$.exercises": completedExercises
           },
         }
       );
