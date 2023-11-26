@@ -66,15 +66,31 @@ module.exports = class MatchupWorkoutAPI {
 
   static async getMatchupWorkoutsByUserID(req, res) {
     const userIds = req.params.userIDs.split(","); // Assuming userIDs are comma-separated in the request params
-    try {
-      const userMatchupWorkouts = await MatchupWorkout.find({
+    const pendingUserWorkout = req.query.pendingUserWorkout === "true"; // Get the additional request parameter
+
+    let query = {
+      userWorkoutData: {
+        $not: {
+          $elemMatch: { completionDate: { $exists: true, $ne: null } },
+        },
+      },
+      "userWorkoutData.userID": { $in: userIds },
+    };
+
+    // Modify the query if pendingUserWorkout is true
+    if (pendingUserWorkout) {
+      query = {
         userWorkoutData: {
-          $not: {
-            $elemMatch: { completionDate: { $exists: true, $ne: null } },
+          $elemMatch: {
+            userID: { $in: userIds },
+            completionDate: { $exists: false },
           },
         },
-        "userWorkoutData.userID": { $in: userIds },
-      });
+      };
+    }
+
+    try {
+      const userMatchupWorkouts = await MatchupWorkout.find(query);
       res.status(200).json(userMatchupWorkouts);
     } catch (err) {
       res.status(404).json({ message: err.message });
