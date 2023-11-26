@@ -65,23 +65,26 @@ module.exports = class MatchupWorkoutAPI {
   }
 
   static async getMatchupWorkoutsByUserID(req, res) {
-    const userIds = req.params.userIDs.split(","); // Assuming userIDs are comma-separated in the request params
-    const pendingUserWorkout = req.query.pendingUserWorkout === "true"; // Get the additional request parameter
+    const userIds = req.params.userIDs.split(",");
+    const pendingUserWorkout = req.query.pendingUserWorkout === "true";
 
     let query = {};
 
     if (pendingUserWorkout) {
-      // When pendingUserWorkout is true, return documents where the completionDate for the specific userID is blank
+      // Fetch documents where the completionDate for the specific userID is blank
       query = {
         userWorkoutData: {
           $elemMatch: {
             userID: { $in: userIds },
-            completionDate: { $exists: false },
+            $or: [
+              { completionDate: { $exists: false } },
+              { completionDate: null },
+            ],
           },
         },
       };
     } else {
-      // When pendingUserWorkout is false, return documents where the completionDate for the specific userID is populated
+      // Fetch documents where the completionDate for the specific userID is populated
       query = {
         userWorkoutData: {
           $elemMatch: {
