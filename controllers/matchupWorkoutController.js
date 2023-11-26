@@ -68,22 +68,25 @@ module.exports = class MatchupWorkoutAPI {
     const userIds = req.params.userIDs.split(","); // Assuming userIDs are comma-separated in the request params
     const pendingUserWorkout = req.query.pendingUserWorkout === "true"; // Get the additional request parameter
 
-    let query = {
-      userWorkoutData: {
-        $not: {
-          $elemMatch: { completionDate: { $exists: true, $ne: null } },
-        },
-      },
-      "userWorkoutData.userID": { $in: userIds },
-    };
+    let query = {};
 
-    // Modify the query if pendingUserWorkout is true
     if (pendingUserWorkout) {
+      // When pendingUserWorkout is true, return documents where the completionDate for the specific userID is blank
       query = {
         userWorkoutData: {
           $elemMatch: {
             userID: { $in: userIds },
             completionDate: { $exists: false },
+          },
+        },
+      };
+    } else {
+      // When pendingUserWorkout is false, return documents where the completionDate for the specific userID is populated
+      query = {
+        userWorkoutData: {
+          $elemMatch: {
+            userID: { $in: userIds },
+            completionDate: { $exists: true, $ne: null },
           },
         },
       };
