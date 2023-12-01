@@ -47,7 +47,7 @@ router.get(
 );
 
 router.get(
-  "/completedMatchupWorkouts/:userID",
+  "/completedMatchupWorkouts/:userIDs",
   completedMatchupWorkoutsAPI.getCompletedMatchupWorkoutsByUserID
 );
 router.get(
