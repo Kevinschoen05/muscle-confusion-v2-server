@@ -94,6 +94,7 @@ router.put("/users/friends/remove/:userID", UserSpecificAPI.removeUserFriends);
 
 //SCHEDULE
 router.post("/users/:userID/userSchedule", UserSpecificAPI.createUserSchedule);
+router.put("/users/:userID/complete/UserSchedule", UserSpecificAPI.updateUserScheduleAsComplete)
 router.put("/users/:userID/userSchedule", UserSpecificAPI.updateUserSchedule);
 
 module.exports = router;
