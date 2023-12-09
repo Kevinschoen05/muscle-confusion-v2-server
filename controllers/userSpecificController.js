@@ -106,27 +106,22 @@ module.exports = class UserSpecificAPI {
   }
 
   static async updateUserScheduleAsComplete(req, res) {
-    const { user, workoutID } = req.body;
+    const { userID, workoutID } = req.body;
 
     try {
-        // Update the 'completed' field of the specific schedule item to true
-        await User.findOneAndUpdate(
-            {
-                userID: user,
-                "schedule.workoutID": workoutID // find the user and the specific schedule item by workoutID
-            },
-            {
-                $set: {
-                    "schedule.$.completed": true // set only the 'completed' field of the matched item to true
-                }
-            }
-        );
-        res.status(200).json({ message: "Specific schedule item marked as completed" });
+      // Update the 'completed' field of the specific schedule item to true
+      console.log("User ID:", user);
+      console.log("Workout ID:", workoutID);
+      const result = await User.findOneAndUpdate(
+        { userID: userID },
+        { $set: { "schedule.$[elem].completed": true } },
+        { arrayFilters: [{ "elem.workoutID": workoutID }], new: true }
+      );
+      console.log("Update Result:", result);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+      res.status(400).json({ message: err.message });
     }
   }
-
 
   //USER FRIENDS
 
