@@ -109,9 +109,7 @@ module.exports = class UserSpecificAPI {
     const { userID, workoutID } = req.body;
 
     try {
-      // Update the 'completed' field of the specific schedule item to true
-      console.log("User ID:", user);
-      console.log("Workout ID:", workoutID);
+      // Update the 'completed' field of the
       const result = await User.findOneAndUpdate(
         { userID: userID },
         { $set: { "schedule.$[elem].completed": true } },
