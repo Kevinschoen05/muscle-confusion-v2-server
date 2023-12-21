@@ -62,6 +62,7 @@ router.post(
 //Exercises
 router.get("/exercises", ExerciseAPI.fetchAllExercises);
 router.get("/exercises/muscleGroups", ExerciseAPI.getMuscleGroups);
+router.get("/exercises/random", ExerciseAPI.getExercisesForRandomWorkout)
 router.get(
   "/exercises/:primaryMuscleGroup",
   ExerciseAPI.fetchExercisesByMuscleGroup
