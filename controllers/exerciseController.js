@@ -73,6 +73,7 @@ module.exports = class ExerciseAPI {
 
         return {
           exerciseName: exercise.exerciseName,
+          exerciseType: 'Resistance',
           targetSets: targetSets,
           sets: Array.from({ length: targetSets }, (_, index) => {
             const targetReps =
