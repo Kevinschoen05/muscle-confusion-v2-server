@@ -91,7 +91,6 @@ module.exports = class ExerciseAPI {
           id: exercise._id,
           primaryMuscleGroup: exercise.primaryMuscleGroup,
           secondaryMuscleGroups: exercise.secondaryMuscleGroups,
-          exerciseType: exercise.exerciseType,
         };
       });
 
