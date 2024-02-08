@@ -41,43 +41,54 @@ module.exports = class ExerciseAPI {
       const maxSets = parseInt(req.query.maxSets);
       const minReps = parseInt(req.query.minReps);
       const maxReps = parseInt(req.query.maxReps);
-      const muscleGroups = req.query.muscleGroups
-        ? req.query.muscleGroups.split(",")
-        : [];
-
+      const muscleGroups = req.query.muscleGroups ? req.query.muscleGroups.split(",") : [];
+      const selectedEquipment = req.query.equipment ? req.query.equipment.split(",") : [];
+  
+      // Equipment hierarchy
+      const equipmentHierarchy = {
+        'Bodyweight': ['Bodyweight'],
+        'Dumbbells Only': ['Bodyweight', 'Dumbbells Only'],
+        'Dumbbells/Barbell Only': ['Bodyweight', 'Dumbbells Only', 'Dumbbells/Barbell Only'],
+        'Full Gym': ['Bodyweight', 'Dumbbells Only', 'Dumbbells/Barbell Only', 'Full Gym'],
+      };
+  
       let query = {};
       if (muscleGroups.length > 0) {
         query.primaryMuscleGroup = { $in: muscleGroups };
       }
-
-      const allExercises = await Exercise.find(query);
-
-      if (allExercises.length < desiredExerciseCount) {
-        return res
-          .status(400)
-          .json({
-            message:
-              "Not enough exercises available for the selected muscle groups.",
-          });
+  
+      // Determine the equipment values to include based on the selected equipment
+      if (selectedEquipment.length > 0) {
+        let equipmentValuesToInclude = [];
+        selectedEquipment.forEach(equipment => {
+          if (equipmentHierarchy[equipment]) {
+            equipmentValuesToInclude = equipmentValuesToInclude.concat(equipmentHierarchy[equipment]);
+          }
+        });
+        equipmentValuesToInclude = [...new Set(equipmentValuesToInclude)]; // Remove duplicates
+        query.equipment = { $in: equipmentValuesToInclude };
       }
-
+  
+      const allExercises = await Exercise.find(query);
+  
+      if (allExercises.length < desiredExerciseCount) {
+        return res.status(400).json({
+          message: "Not enough exercises available for the selected criteria.",
+        });
+      }
+  
       const shuffledExercises = allExercises.sort(() => 0.5 - Math.random());
-      const selectedExercises = shuffledExercises.slice(
-        0,
-        desiredExerciseCount
-      );
-
+      const selectedExercises = shuffledExercises.slice(0, desiredExerciseCount);
+  
       const formattedExercises = selectedExercises.map((exercise) => {
-        const targetSets =
-          Math.floor(Math.random() * (maxSets - minSets + 1)) + minSets;
-
+        const targetSets = Math.floor(Math.random() * (maxSets - minSets + 1)) + minSets;
+  
         return {
           exerciseName: exercise.exerciseName,
           exerciseType: 'Resistance',
           targetSets: targetSets,
           sets: Array.from({ length: targetSets }, (_, index) => {
-            const targetReps =
-              Math.floor(Math.random() * (maxReps - minReps + 1)) + minReps;
+            const targetReps = Math.floor(Math.random() * (maxReps - minReps + 1)) + minReps;
             return {
               index: index + 1,
               target_reps: targetReps,
@@ -91,9 +102,10 @@ module.exports = class ExerciseAPI {
           id: exercise._id,
           primaryMuscleGroup: exercise.primaryMuscleGroup,
           secondaryMuscleGroups: exercise.secondaryMuscleGroups,
+          equipment: exercise.equipment,
         };
       });
-
+  
       res.status(200).json(formattedExercises);
     } catch (err) {
       res.status(500).json({ message: err.message });
