@@ -185,4 +185,43 @@ module.exports = class UserSpecificAPI {
       res.status(400).json({ message: err.message });
     }
   }
+
+  //USER BIOMETRICS
+
+  static async getUserWeights(req, res) {
+    const userID = req.params.userID;
+
+    try {
+      // Find the user by userID and only return the weights field
+      const user = await User.findOne({ userID: userID }, "weights");
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Return the user's weights entries
+      res.status(200).json(user.weights);
+    } catch (err) {
+      // Handle possible errors
+      res.status(500).json({ message: err.message });
+    }
+  }
+
+  static async addUserWeight(req, res) {
+    const newWeight = {
+      weight: req.body.weight, // Assuming the request body contains a weight field
+      date: new Date(), // Optionally capture the date; it will default to now if not provided
+    };
+    const userID = req.params.userID;
+
+    try {
+      await User.findOneAndUpdate(
+        { userID: userID }, // Find the user by userID
+        { $push: { weights: newWeight } } // Add the new weight entry to the weights array
+      );
+      res.status(200).json({ message: "Weight Record Added Successfully" });
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
 };

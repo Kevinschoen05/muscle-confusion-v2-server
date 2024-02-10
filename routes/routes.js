@@ -98,4 +98,8 @@ router.post("/users/:userID/userSchedule", UserSpecificAPI.createUserSchedule);
 router.put("/users/:userID/complete/UserSchedule", UserSpecificAPI.updateUserScheduleAsComplete)
 router.put("/users/:userID/userSchedule", UserSpecificAPI.updateUserSchedule);
 
+//BIOMETRICS
+router.get("/users/:userID/biometrics/weights", UserSpecificAPI.getUserWeights);
+router.put("/users/:userID/biometrics/weights", UserSpecificAPI.addUserWeight)
+
 module.exports = router;
