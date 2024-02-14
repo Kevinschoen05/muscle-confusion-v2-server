@@ -20,6 +20,13 @@ const userSchema = mongoose.Schema({
             type: Date,
             default: Date.now // Automatically captures the date when the weight record is created
         }
+    }],
+    targetWeights: [{
+        weight: Number, // The weight of the user at the time of the record
+        date: {
+            type: Date,
+            default: Date.now // Automatically captures the date when the weight record is created
+        }
     }]
 })
 module.exports = mongoose.model("User", userSchema)
