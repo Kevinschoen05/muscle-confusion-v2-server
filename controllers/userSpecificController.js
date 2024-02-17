@@ -219,7 +219,7 @@ module.exports = class UserSpecificAPI {
       }
 
       // Return the user's weights entries
-      res.status(200).json(user.weights);
+      res.status(200).json(user.targetWeights);
     } catch (err) {
       // Handle possible errors
       res.status(500).json({ message: err.message });
