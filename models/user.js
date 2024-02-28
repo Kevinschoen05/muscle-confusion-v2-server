@@ -14,6 +14,7 @@ const userSchema = mongoose.Schema({
     inbox: {
         type: Array
     },
+    birthday: Date,
     weights: [{
         weight: Number, // The weight of the user at the time of the record
         date: {

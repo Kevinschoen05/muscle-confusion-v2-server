@@ -261,4 +261,38 @@ module.exports = class UserSpecificAPI {
       res.status(400).json({ message: err.message });
     }
   }
+
+  static async addUserBirthday(req, res) {
+    const userID = req.params.userID;
+    const newBirthday = req.body.birthday;
+
+    try {
+      await User.findOneAndUpdate(
+        { userID: userID },
+        { $set: { birthday: new Date(newBirthday) } }
+      );
+      res.status(200).json({ message: "Birthday Updated Successfully" });
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
+
+  static async getUserBirthday(req, res) {
+    const userID = req.params.userID; // Assuming the userID is passed as a URL parameter
+
+    try {
+      // Find the user by userID and only return the birthday field
+      const user = await User.findOne({ userID: userID }, "birthday");
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Return the user's birthday
+      res.status(200).json({ birthday: user.birthday });
+    } catch (err) {
+      // Handle possible errors
+      res.status(500).json({ message: err.message });
+    }
+  }
 };
