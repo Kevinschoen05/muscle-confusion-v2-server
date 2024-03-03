@@ -225,6 +225,43 @@ module.exports = class UserSpecificAPI {
       res.status(500).json({ message: err.message });
     }
   }
+  static async getUserBirthday(req, res) {
+    const userID = req.params.userID; // Assuming the userID is passed as a URL parameter
+
+    try {
+      // Find the user by userID and only return the birthday field
+      const user = await User.findOne({ userID: userID }, "birthday");
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Return the user's birthday
+      res.status(200).json({ birthday: user.birthday });
+    } catch (err) {
+      // Handle possible errors
+      res.status(500).json({ message: err.message });
+    }
+  }
+
+  static async getUserHeight(req, res) {
+    const userID = req.params.userID;
+
+    try {
+      // Find the user by userID and only return the height field
+      const user = await User.findOne({ userID: userID }, "height");
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Return the user's height entries
+      res.status(200).json(user.height);
+    } catch (err) {
+      // Handle possible errors
+      res.status(500).json({ message: err.message });
+    }
+  }
 
   static async addUserWeight(req, res) {
     const newWeight = {
@@ -277,22 +314,22 @@ module.exports = class UserSpecificAPI {
     }
   }
 
-  static async getUserBirthday(req, res) {
-    const userID = req.params.userID; // Assuming the userID is passed as a URL parameter
+  static async addUserHeight(req, res) {
+    const newHeight = {
+      heightFeet: req.body.heightFeet, // Assuming the request body contains a heightFeet field
+      heightInches: req.body.heightInches, // Assuming the request body contains a heightInches field
+      date: new Date(), // Optionally capture the date; it will default to now if not provided
+    };
+    const userID = req.params.userID;
 
     try {
-      // Find the user by userID and only return the birthday field
-      const user = await User.findOne({ userID: userID }, "birthday");
-
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      // Return the user's birthday
-      res.status(200).json({ birthday: user.birthday });
+      await User.findOneAndUpdate(
+        { userID: userID }, // Find the user by userID
+        { $push: { height: newHeight } } // Add the new height entry to the height array
+      );
+      res.status(200).json({ message: "Height Record Added Successfully" });
     } catch (err) {
-      // Handle possible errors
-      res.status(500).json({ message: err.message });
+      res.status(400).json({ message: err.message });
     }
   }
 };

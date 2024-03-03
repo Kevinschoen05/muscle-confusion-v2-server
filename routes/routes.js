@@ -102,9 +102,11 @@ router.put("/users/:userID/userSchedule", UserSpecificAPI.updateUserSchedule);
 router.get("/users/:userID/biometrics/weights", UserSpecificAPI.getUserWeights);
 router.get("/users/:userID/biometrics/targetWeights", UserSpecificAPI.getUserTargetWeights);
 router.get("/users/:userID/biometrics/birthday", UserSpecificAPI.getUserBirthday);
+router.get("/users/:userID/biometrics/heights", UserSpecificAPI.getUserHeight)
 router.put("/users/:userID/biometrics/weights", UserSpecificAPI.addUserWeight);
 router.put("/users/:userID/biometrics/targetWeights", UserSpecificAPI.addUserTargetWeight);
 router.put("/users/:userID/biometrics/birthday", UserSpecificAPI.addUserBirthday);
+router.put("/users/:userID/biometrics/heights", UserSpecificAPI.addUserHeight)
 
 
 module.exports = router;
