@@ -14,6 +14,7 @@ router.get("/workouts/:workoutID", WorkoutAPI.fetchWorkoutbyWorkoutId);
 
 router.post("/workouts", WorkoutAPI.addWorkout);
 router.put("/workouts/edit/:workoutID", WorkoutAPI.updateWorkoutByWorkoutID);
+router.put("/workouts/addUser", WorkoutAPI.addUserToWorkout)
 
 //Completed Workouts
 router.get("/completedWorkouts", CompletedWorkoutAPI.fetchAllCompletedWorkouts);
