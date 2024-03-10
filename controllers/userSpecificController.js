@@ -26,7 +26,7 @@ module.exports = class UserSpecificAPI {
       const userCreationResult = await User.create(newUser);
       if (userCreationResult) {
         // Since addUserToWorkout is static, use the class name to call it
-        const workoutUpdateSuccess = await addUserToWorkout(defaultWorkoutID, userID);
+        const workoutUpdateSuccess = await UserSpecificAPI.addUserToWorkout(defaultWorkoutID, userID);
         
         if (workoutUpdateSuccess) {
           console.log(`User ${userID} successfully added to default workout.`);
