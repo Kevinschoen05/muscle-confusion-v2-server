@@ -6,6 +6,7 @@ module.exports = class UserSpecificAPI {
   static async initializeUser(req, res) {
     const userID = req.params.userID;
     const userName = req.body.userName;
+    const defaultWorkoutID = '65ed12562cf7980034cf8a69'
 
     console.log(`Request body: ${JSON.stringify(req.body)}`);
     console.log(`userName value: ${userName}`);
@@ -22,10 +23,26 @@ module.exports = class UserSpecificAPI {
 
     console.log(newUser);
     try {
-      const result = await User.create(newUser);
-      res.status(200).json(`User ${userID} created! body: ${userName} `);
+      const userCreationResult = await User.create(newUser);
+      if (userCreationResult) {
+        // Since addUserToWorkout is static, use the class name to call it
+        const workoutUpdateSuccess = await addUserToWorkout(defaultWorkoutID, userID);
+        
+        if (workoutUpdateSuccess) {
+          console.log(`User ${userID} successfully added to default workout.`);
+          res.status(200).json({ message: `User ${userID} created and added to default workout successfully!` });
+        } else {
+          console.log(`User ${userID} created but adding to default workout failed.`);
+          // Consider how you want to handle partial success
+          res.status(500).json({ message: `User ${userID} created but failed to add to default workout.` });
+        }
+      } else {
+        // This else part might not be necessary since an error would likely throw an exception
+        res.status(400).json({ message: `Failed to create user ${userID}.` });
+      }
     } catch (err) {
-      res.status(404).json(`Error creating user ${userID}: ${err}`);
+      console.error(`Error creating user ${userID}: ${err}`);
+      res.status(500).json({ message: `Error creating user ${userID}: ${err}` });
     }
   }
 
