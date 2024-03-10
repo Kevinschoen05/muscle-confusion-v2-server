@@ -49,33 +49,27 @@ module.exports = class WorkoutAPI {
     }
   }
 
-  static async addUserToWorkout(req, res) {
-    const workoutID = req.body.workoutID;
-    const userID = req.body.userID;
+  static async addUserToWorkout(workoutID, userID) {
     console.log(`Received workoutID: ${workoutID}, userID: ${userID}`);
-
     try {
       const result = await Workout.findOneAndUpdate(
-        { _id: ObjectId(workoutID) }, // Mongoose automatically handles the conversion to ObjectId.
-        { $addToSet: { users: userID } }, // Use $addToSet as confirmed to be working
-        { new: true } // Returns the modified document
+        { _id: workoutID },
+        { $addToSet: { users: userID } },
+        { new: true }
       );
-      console.log(result); // See what the database operation returns
-
-      if (result) {
-        res
-          .status(200)
-          .json({
-            message: "User added to workout successfully",
-            data: result,
-          });
-      } else {
-        // If no document was found and updated, return a different message
-        res.status(404).json({ message: "Workout not found" });
+      console.log(result); 
+      if (!result) {
+        console.log(`Workout not found with ID: ${workoutID}`);
+        return { success: false, message: "Workout not found" };
       }
+      return {
+        success: true,
+        message: "User added to workout successfully",
+        data: result,
+      };
     } catch (err) {
-      console.error(err); // More detailed error logging
-      res.status(400).json({ message: err.message });
+      console.error(`Error adding user ${userID} to workout: ${err}`);
+      return { success: false, message: err.message };
     }
   }
 };
