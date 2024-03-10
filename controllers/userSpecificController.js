@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const CompletedWorkout = require("../models/completedWorkouts");
 const Workout = require("../models/workouts");
+const WorkoutController = require('./workoutController');
+
 
 module.exports = class UserSpecificAPI {
   static async initializeUser(req, res) {
@@ -26,7 +28,7 @@ module.exports = class UserSpecificAPI {
       const userCreationResult = await User.create(newUser);
       if (userCreationResult) {
         // Since addUserToWorkout is static, use the class name to call it
-        const workoutUpdateSuccess = await UserSpecificAPI.addUserToWorkout(defaultWorkoutID, userID);
+        const workoutUpdateSuccess = await WorkoutController.addUserToWorkout(defaultWorkoutID, userID);
         
         if (workoutUpdateSuccess) {
           console.log(`User ${userID} successfully added to default workout.`);
